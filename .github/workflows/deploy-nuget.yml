@@ -25,7 +25,9 @@ jobs:
           BRANCH="${GITHUB_REF##*/}"
           COMMIT_SHORT_SHA=`git rev-parse --short ${GITHUB_SHA}`
           COMMIT_COUNT=`git rev-list --count ${BRANCH}`
-          git rev-list --count
+          git rev-list --count HEAD
+          git rev-list --count dev
+          git rev-list --count --all
           if [ "$BRANCH" = "main" ]; then
             dotnet pack --no-dependencies -c Release
           else
