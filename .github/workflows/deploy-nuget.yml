@@ -26,14 +26,11 @@ jobs:
         run: |
           BRANCH="${GITHUB_REF##*/}"
           COMMIT_SHORT_SHA=`git rev-parse --short ${GITHUB_SHA}`
-          COMMIT_COUNT=`git rev-list --count ${BRANCH}`
-          git rev-list --count HEAD
-          git rev-list --count dev
-          git rev-list --count --all
+          COMMIT_TIME=`git show -s --format=%ct HEAD`
           if [ "$BRANCH" = "main" ]; then
             dotnet pack --no-dependencies -c Release
           else
-            dotnet pack --no-dependencies -c Debug --version-suffix ${BRANCH}.${COMMIT_COUNT}+${COMMIT_SHORT_SHA}
+            dotnet pack --no-dependencies -c Debug --version-suffix ${BRANCH}.${COMMIT_TIME}+${COMMIT_SHORT_SHA}
           fi
       - name: Find Package
         run: |
